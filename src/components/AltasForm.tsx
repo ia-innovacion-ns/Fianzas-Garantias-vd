@@ -91,12 +91,13 @@ const AltasForm = () => {
         .insert({
           numero_poliza: formData.numero_poliza,
           ci_nit: formData.ci_nit,
-          region: formData.region as any,
+          region: formData.region as 'Norte' | 'Sur' | 'Este' | 'Oeste' | 'Central',
           id_garantia: formData.id_garantia,
-          tipo_garantia: formData.tipo_garantia as any,
-          tipo_operacion: formData.tipo_operacion as any,
-          moneda: formData.moneda as any,
-          valor_nominal: parseFloat(formData.valor_nominal)
+          tipo_garantia: formData.tipo_garantia as 'Fianza' | 'Hipotecaria' | 'Prendaria' | 'Bancaria' | 'Comercial',
+          tipo_operacion: formData.tipo_operacion as 'Constitución' | 'Renovación' | 'Ampliación' | 'Reducción' | 'Cancelación',
+          moneda: formData.moneda as 'BOB' | 'USD' | 'EUR',
+          valor_nominal: parseFloat(formData.valor_nominal),
+          created_by: profile?.user_id || ''
         });
 
       if (error) throw error;
@@ -189,7 +190,7 @@ const AltasForm = () => {
               <Label htmlFor="region">Región</Label>
               <Select
                 value={formData.region}
-                onValueChange={(value) => setFormData({ ...formData, region: value })}
+                onValueChange={(value: 'Norte' | 'Sur' | 'Este' | 'Oeste' | 'Central') => setFormData({ ...formData, region: value })}
                 disabled={profile?.role === 'reg_user'}
               >
                 <SelectTrigger className="bg-background/50">

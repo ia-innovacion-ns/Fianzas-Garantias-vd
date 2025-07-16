@@ -17,13 +17,13 @@ interface AuditLog {
   table_name: string;
   old_values: any;
   new_values: any;
-  ip_address: string;
+  ip_address: unknown;
   created_at: string;
   profiles?: {
     full_name: string;
     email: string;
     role: string;
-  };
+  } | null;
 }
 
 const AuditoriaView = () => {
@@ -43,22 +43,29 @@ const AuditoriaView = () => {
   const fetchAuditLogs = async () => {
     setIsLoading(true);
     try {
-      const { data, error } = await supabase
+      // First, get audit logs
+      const { data: auditData, error: auditError } = await supabase
         .from('audit_log')
-        .select(`
-          *,
-          profiles (
-            full_name,
-            email,
-            role
-          )
-        `)
+        .select('*')
         .order('created_at', { ascending: false })
         .limit(500);
 
-      if (error) throw error;
+      if (auditError) throw auditError;
+
+      // Then get profiles data
+      const { data: profilesData, error: profilesError } = await supabase
+        .from('profiles')
+        .select('user_id, full_name, email, role');
+
+      if (profilesError) throw profilesError;
+
+      // Combine the data
+      const combinedData = auditData?.map(log => ({
+        ...log,
+        profiles: profilesData?.find(profile => profile.user_id === log.user_id) || null
+      })) || [];
       
-      setAuditLogs(data || []);
+      setAuditLogs(combinedData);
     } catch (error: any) {
       toast({
         title: "Error",
@@ -174,7 +181,7 @@ const AuditoriaView = () => {
           log.profiles?.role || 'N/A',
           log.action,
           log.table_name,
-          log.ip_address || 'N/A'
+          log.ip_address ? String(log.ip_address) : 'N/A'
         ].join(',');
       })
     ].join('\n');
@@ -372,7 +379,7 @@ const AuditoriaView = () => {
                           <Badge variant="outline">{log.table_name}</Badge>
                         </TableCell>
                         <TableCell className="font-mono text-xs">
-                          {log.ip_address || 'N/A'}
+                          {log.ip_address ? String(log.ip_address) : 'N/A'}
                         </TableCell>
                         <TableCell>
                           {log.action === 'INSERT' && log.new_values && (
