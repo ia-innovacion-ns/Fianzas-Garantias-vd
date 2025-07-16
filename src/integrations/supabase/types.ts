@@ -14,16 +14,175 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      audit_log: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          ip_address: unknown | null
+          new_values: Json | null
+          old_values: Json | null
+          record_id: string | null
+          table_name: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      garantias: {
+        Row: {
+          ci_nit: string
+          created_at: string
+          created_by: string
+          deactivated_at: string | null
+          deactivated_by: string | null
+          id: string
+          id_garantia: string
+          is_active: boolean
+          moneda: Database["public"]["Enums"]["currency"]
+          numero_poliza: string
+          region: Database["public"]["Enums"]["region"]
+          tipo_garantia: Database["public"]["Enums"]["tipo_garantia"]
+          tipo_operacion: Database["public"]["Enums"]["tipo_operacion"]
+          updated_at: string
+          valor_nominal: number
+        }
+        Insert: {
+          ci_nit: string
+          created_at?: string
+          created_by: string
+          deactivated_at?: string | null
+          deactivated_by?: string | null
+          id?: string
+          id_garantia: string
+          is_active?: boolean
+          moneda: Database["public"]["Enums"]["currency"]
+          numero_poliza: string
+          region: Database["public"]["Enums"]["region"]
+          tipo_garantia: Database["public"]["Enums"]["tipo_garantia"]
+          tipo_operacion: Database["public"]["Enums"]["tipo_operacion"]
+          updated_at?: string
+          valor_nominal: number
+        }
+        Update: {
+          ci_nit?: string
+          created_at?: string
+          created_by?: string
+          deactivated_at?: string | null
+          deactivated_by?: string | null
+          id?: string
+          id_garantia?: string
+          is_active?: boolean
+          moneda?: Database["public"]["Enums"]["currency"]
+          numero_poliza?: string
+          region?: Database["public"]["Enums"]["region"]
+          tipo_garantia?: Database["public"]["Enums"]["tipo_garantia"]
+          tipo_operacion?: Database["public"]["Enums"]["tipo_operacion"]
+          updated_at?: string
+          valor_nominal?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          is_active: boolean
+          region: Database["public"]["Enums"]["region"] | null
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          is_active?: boolean
+          region?: Database["public"]["Enums"]["region"] | null
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          is_active?: boolean
+          region?: Database["public"]["Enums"]["region"] | null
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_current_user_region: {
+        Args: Record<PropertyKey, never>
+        Returns: Database["public"]["Enums"]["region"]
+      }
+      get_current_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: Database["public"]["Enums"]["user_role"]
+      }
+      log_audit_action: {
+        Args: {
+          p_action: string
+          p_table_name: string
+          p_record_id?: string
+          p_old_values?: Json
+          p_new_values?: Json
+        }
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      currency: "BOB" | "USD" | "EUR"
+      region: "Norte" | "Sur" | "Este" | "Oeste" | "Central"
+      tipo_garantia:
+        | "Fianza"
+        | "Hipotecaria"
+        | "Prendaria"
+        | "Bancaria"
+        | "Comercial"
+      tipo_operacion:
+        | "Constitución"
+        | "Renovación"
+        | "Ampliación"
+        | "Reducción"
+        | "Cancelación"
+      user_role: "reg_user" | "nac_user" | "admin_user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +309,24 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      currency: ["BOB", "USD", "EUR"],
+      region: ["Norte", "Sur", "Este", "Oeste", "Central"],
+      tipo_garantia: [
+        "Fianza",
+        "Hipotecaria",
+        "Prendaria",
+        "Bancaria",
+        "Comercial",
+      ],
+      tipo_operacion: [
+        "Constitución",
+        "Renovación",
+        "Ampliación",
+        "Reducción",
+        "Cancelación",
+      ],
+      user_role: ["reg_user", "nac_user", "admin_user"],
+    },
   },
 } as const

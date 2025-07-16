@@ -2,41 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Sistema de diseño corporativo - Policy Shield Dashboard
+   Paleta: Grises plateados y azules corporativos
+   Estilo: Minimalista moderno con glass-morphism
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Colores base corporativos */
+    --background: 210 20% 98%;
+    --foreground: 215 25% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Superficies con efecto glass */
+    --card: 210 40% 98%;
+    --card-foreground: 215 25% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 210 40% 98%;
+    --popover-foreground: 215 25% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
+    /* Azules corporativos */
+    --primary: 216 87% 32%;
     --primary-foreground: 210 40% 98%;
+    --primary-glow: 216 87% 45%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Grises plateados */
+    --secondary: 215 20% 92%;
+    --secondary-foreground: 215 25% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 215 15% 95%;
+    --muted-foreground: 215 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 210 30% 88%;
+    --accent-foreground: 215 25% 25%;
 
-    --destructive: 0 84.2% 60.2%;
+    /* Estados de error */
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Estados de éxito */
+    --success: 142 76% 36%;
+    --success-foreground: 210 40% 98%;
 
-    --radius: 0.5rem;
+    /* Estados de advertencia */
+    --warning: 38 92% 50%;
+    --warning-foreground: 215 25% 15%;
+
+    /* Bordes y controles */
+    --border: 215 20% 85%;
+    --input: 215 20% 92%;
+    --ring: 216 87% 32%;
+
+    /* Gradientes corporativos */
+    --gradient-primary: linear-gradient(135deg, hsl(216 87% 32%), hsl(216 87% 45%));
+    --gradient-secondary: linear-gradient(135deg, hsl(215 20% 92%), hsl(210 30% 88%));
+    --gradient-glass: linear-gradient(135deg, 
+      hsla(210, 40%, 98%, 0.8), 
+      hsla(210, 40%, 95%, 0.6)
+    );
+
+    /* Sombras elegantes */
+    --shadow-sm: 0 2px 4px -1px hsla(215, 25%, 15%, 0.1);
+    --shadow-md: 0 4px 6px -1px hsla(215, 25%, 15%, 0.1), 0 2px 4px -1px hsla(215, 25%, 15%, 0.06);
+    --shadow-lg: 0 10px 15px -3px hsla(215, 25%, 15%, 0.1), 0 4px 6px -2px hsla(215, 25%, 15%, 0.05);
+    --shadow-glow: 0 0 20px hsla(216, 87%, 32%, 0.3);
+    --shadow-elegant: 0 8px 32px hsla(215, 25%, 15%, 0.12);
+
+    /* Animaciones */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
